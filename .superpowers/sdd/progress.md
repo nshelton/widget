@@ -15,3 +15,5 @@ Plan: docs/superpowers/plans/2026-06-26-daytime-visualizer-widget.md
 
 ## Ledger
 Task 1: complete (Xcode project scaffolded by user; baseline app scheme builds on iPhone 17 sim)
+Task 2: complete (commits 248982d..e7e9f79, review clean — spec ✅, quality approved)
+  Minor (defer to final review): params() helper name vague; sunEvents noonJD comment misleading; elevationSamples `out` lacks tuple labels
