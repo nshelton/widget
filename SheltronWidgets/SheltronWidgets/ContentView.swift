@@ -41,7 +41,7 @@ struct ContentView: View {
     @State private var model: DayModel?
     @State private var lastUpdate: Date?
     @State private var loading = false
-    @State private var theme = WidgetTheme.load()
+    @State private var store = PaletteStore.load()
     @State private var showSettings = false
 
     private var granted: Bool {
@@ -63,14 +63,14 @@ struct ContentView: View {
 
             // Identical render of the widget canvas
             ZStack {
-                RoundedRectangle(cornerRadius: 22).fill(theme.background.color)
+                RoundedRectangle(cornerRadius: 22).fill(store.selected.background.color)
                 if let model {
                     if model.locationDenied {
                         Text("Enable location")
                             .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(theme.text.color)
+                            .foregroundColor(store.selected.text.color)
                     } else {
-                        DayChartView(model: model, now: Date(), theme: theme)
+                        DayChartView(model: model, now: Date(), theme: store.selected)
                     }
                 } else {
                     ProgressView().tint(.white)
@@ -114,12 +114,12 @@ struct ContentView: View {
             refresh()
         }
         .onChange(of: auth.status) { _, _ in refresh() }
-        .onChange(of: theme) { _, newTheme in
-            newTheme.save()
+        .onChange(of: store) { _, newStore in
+            newStore.save()
             WidgetCenter.shared.reloadAllTimelines()
         }
         .sheet(isPresented: $showSettings) {
-            SettingsView(theme: $theme)
+            SettingsView(store: $store)
         }
     }
 
