@@ -1,5 +1,4 @@
 import XCTest
-@testable import SheltronWidgetExtensionExtension
 
 final class SolarMathTests: XCTestCase {
     // Los Angeles
