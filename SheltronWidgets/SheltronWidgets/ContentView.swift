@@ -41,31 +41,36 @@ struct ContentView: View {
     @State private var model: DayModel?
     @State private var lastUpdate: Date?
     @State private var loading = false
+    @State private var theme = WidgetTheme.load()
+    @State private var showSettings = false
 
     private var granted: Bool {
         auth.status == .authorizedWhenInUse || auth.status == .authorizedAlways
     }
 
-    // Medium-widget aspect ratio so this matches what's on the home screen.
     private let widgetAspect: CGFloat = 360.0 / 170.0
 
     var body: some View {
         VStack(spacing: 20) {
             HStack(spacing: 8) {
                 Image(systemName: "sun.max.fill").foregroundStyle(.orange)
-                Text("Daytime").font(.headline)
+                Text("Today").font(.headline)
+                Spacer()
+                Button { showSettings = true } label: {
+                    Image(systemName: "paintpalette").font(.title3)
+                }
             }
 
             // Identical render of the widget canvas
             ZStack {
-                RoundedRectangle(cornerRadius: 22).fill(.black)
+                RoundedRectangle(cornerRadius: 22).fill(theme.background.color)
                 if let model {
                     if model.locationDenied {
                         Text("Enable location")
                             .font(.system(.caption, design: .monospaced))
-                            .foregroundColor(.white.opacity(0.6))
+                            .foregroundColor(theme.text.color)
                     } else {
-                        DayChartView(model: model, now: Date())
+                        DayChartView(model: model, now: Date(), theme: theme)
                     }
                 } else {
                     ProgressView().tint(.white)
@@ -96,6 +101,7 @@ struct ContentView: View {
                 if let lastUpdate {
                     Text("updated \(lastUpdate.formatted(date: .omitted, time: .standard))")
                 }
+                Text("auth: \(statusName(auth.status))")
             }
             .font(.system(size: 11, design: .monospaced))
             .foregroundStyle(.secondary)
@@ -108,6 +114,24 @@ struct ContentView: View {
             refresh()
         }
         .onChange(of: auth.status) { _, _ in refresh() }
+        .onChange(of: theme) { _, newTheme in
+            newTheme.save()
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView(theme: $theme)
+        }
+    }
+
+    private func statusName(_ s: CLAuthorizationStatus) -> String {
+        switch s {
+        case .notDetermined: return "notDetermined"
+        case .restricted: return "restricted"
+        case .denied: return "denied"
+        case .authorizedAlways: return "authorizedAlways"
+        case .authorizedWhenInUse: return "authorizedWhenInUse"
+        @unknown default: return "unknown"
+        }
     }
 
     private func refresh() {

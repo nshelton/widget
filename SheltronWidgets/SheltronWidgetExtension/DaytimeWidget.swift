@@ -38,16 +38,17 @@ struct DaytimeWidget: Widget {
     let kind = "DaytimeWidget"
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: DaytimeProvider()) { entry in
+            let theme = WidgetTheme.load()
             Group {
                 if entry.model.locationDenied {
                     Text("Enable location")
                         .font(.system(.caption, design: .monospaced))
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(theme.text.color)
                 } else {
-                    DayChartView(model: entry.model, now: entry.date)
+                    DayChartView(model: entry.model, now: entry.date, theme: theme)
                 }
             }
-            .containerBackground(.black, for: .widget)
+            .containerBackground(theme.background.color, for: .widget)
         }
         .configurationDisplayName("Daytime")
         .description("Sun arc and temperature across the day.")

@@ -5,10 +5,7 @@ struct DayChartView: View {
     let model: DayModel
     let now: Date
 
-    private let amber = Color(red: 1.0, green: 0.76, blue: 0.32)
-    private let pink = Color(red: 1.0, green: 0.36, blue: 0.54)
-    private let nightBlue = Color(red: 0.48, green: 0.66, blue: 1.0)
-    private let faint = Color.white.opacity(0.45)
+    var theme: WidgetTheme = .load()
 
     private static let hourFormatter: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "ha"; return f
@@ -66,22 +63,22 @@ struct DayChartView: View {
 
             var dayLayer = ctx
             dayLayer.clip(to: Path(CGRect(x: plot.minX, y: plot.minY, width: plot.width, height: yHorizon - plot.minY)))
-            dayLayer.fill(poly, with: .color(amber.opacity(0.32)))
+            dayLayer.fill(poly, with: .color(theme.dayFill.color))
 
             var nightLayer = ctx
             nightLayer.clip(to: Path(CGRect(x: plot.minX, y: yHorizon, width: plot.width, height: plot.maxY - yHorizon)))
-            nightLayer.fill(poly, with: .color(nightBlue.opacity(0.30)))
+            nightLayer.fill(poly, with: .color(theme.nightFill.color))
 
             // Horizon line (0° elevation)
             var horizon = Path()
             horizon.move(to: CGPoint(x: plot.minX, y: yHorizon))
             horizon.addLine(to: CGPoint(x: plot.maxX, y: yHorizon))
-            ctx.stroke(horizon, with: .color(.white.opacity(0.28)), lineWidth: 1)
+            ctx.stroke(horizon, with: .color(theme.horizon.color), lineWidth: 1)
 
             // Full elevation curve stroke
             var arc = Path()
             for (i, p) in elevPts.enumerated() { i == 0 ? arc.move(to: p) : arc.addLine(to: p) }
-            ctx.stroke(arc, with: .color(amber.opacity(0.9)), lineWidth: 1.8)
+            ctx.stroke(arc, with: .color(theme.sunLine.color), lineWidth: 1.8)
 
             // Hourly temperature line
             if model.hourlyTemps.count > 1 {
@@ -90,7 +87,7 @@ struct DayChartView: View {
                     let p = CGPoint(x: x(h.date), y: yTemp(h.temp))
                     i == 0 ? line.move(to: p) : line.addLine(to: p)
                 }
-                ctx.stroke(line, with: .color(amber), lineWidth: 2.4)
+                ctx.stroke(line, with: .color(theme.tempLine.color), lineWidth: 2.4)
             }
 
             // Dashed reference line at current temp
@@ -98,7 +95,7 @@ struct DayChartView: View {
                 var dash = Path()
                 dash.move(to: CGPoint(x: plot.minX, y: yTemp(curTemp)))
                 dash.addLine(to: CGPoint(x: plot.maxX, y: yTemp(curTemp)))
-                ctx.stroke(dash, with: .color(faint), style: StrokeStyle(lineWidth: 1, dash: [3, 4]))
+                ctx.stroke(dash, with: .color(theme.text.color), style: StrokeStyle(lineWidth: 1, dash: [3, 4]))
             }
 
             // Sunrise / sunset verticals + labels
@@ -107,9 +104,9 @@ struct DayChartView: View {
                 var v = Path()
                 v.move(to: CGPoint(x: x(e), y: plot.minY))
                 v.addLine(to: CGPoint(x: x(e), y: plot.maxY))
-                ctx.stroke(v, with: .color(faint), lineWidth: 1)
+                ctx.stroke(v, with: .color(theme.text.color), lineWidth: 1)
                 let text = up ? label + eventLabel(e) : eventLabel(e) + label
-                ctx.draw(Text(text).font(.system(size: 9, design: .monospaced)).foregroundColor(faint),
+                ctx.draw(Text(text).font(.system(size: 9, design: .monospaced)).foregroundColor(theme.text.color),
                          at: CGPoint(x: x(e) + (up ? 2 : -2), y: plot.minY + 4),
                          anchor: up ? .topLeading : .topTrailing)
             }
@@ -119,36 +116,36 @@ struct DayChartView: View {
                 var nl = Path()
                 nl.move(to: CGPoint(x: x(now), y: plot.minY - 4))
                 nl.addLine(to: CGPoint(x: x(now), y: plot.maxY))
-                ctx.stroke(nl, with: .color(pink), lineWidth: 1.8)
+                ctx.stroke(nl, with: .color(theme.nowLine.color), lineWidth: 1.8)
                 if let curTemp = interpolatedTemp(at: now) {
                     let dot = CGRect(x: x(now) - 3.5, y: yTemp(curTemp) - 3.5, width: 7, height: 7)
-                    ctx.fill(Path(ellipseIn: dot), with: .color(pink))
+                    ctx.fill(Path(ellipseIn: dot), with: .color(theme.nowLine.color))
                 }
             }
 
             // Axis labels: temps (left corners) and interior hour ticks (bottom)
             if let hi = model.tempMax {
-                ctx.draw(Text("\(Int(hi.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.7)),
+                ctx.draw(Text("\(Int(hi.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(theme.text.color),
                          at: CGPoint(x: 3, y: plot.minY + 1), anchor: .topLeading)
             }
             if let lo = model.tempMin {
-                ctx.draw(Text("\(Int(lo.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.7)),
+                ctx.draw(Text("\(Int(lo.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(theme.text.color),
                          at: CGPoint(x: 3, y: plot.maxY - 1), anchor: .bottomLeading)
             }
             for hour in [6, 12, 18] {
                 let d = model.dayStart.addingTimeInterval(Double(hour) * 3600)
-                ctx.draw(Text(clockLabel(d)).font(.system(size: 9, design: .monospaced)).foregroundColor(faint),
+                ctx.draw(Text(clockLabel(d)).font(.system(size: 9, design: .monospaced)).foregroundColor(theme.text.color),
                          at: CGPoint(x: x(d), y: plot.maxY - 2), anchor: .bottom)
             }
         }
         .overlay(alignment: .topTrailing) {
             Text(stamp(model.generatedAt))
                 .font(.system(size: 9, design: .monospaced))
-                .foregroundColor(.white.opacity(0.35))
+                .foregroundColor(theme.text.color)
                 .padding(.trailing, 4).padding(.top, 2)
         }
-        .padding(8)
-        .background(Color.black)
+        .padding(2)
+        .background(theme.background.color)
     }
 
     private func interpolatedTemp(at date: Date) -> Double? {
