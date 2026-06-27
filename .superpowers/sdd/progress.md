@@ -23,3 +23,4 @@ Task 4: complete-pending-visual (commit 8f5185f, code review clean — spec ✅,
   NEEDS user visual confirm of Xcode preview vs reference image
 Task 5: complete (commit 8ff7837, review clean — spec ✅, quality approved)
   Minor (defer): CLGeocoder deprecated on iOS 26 (still functional)
+Task 6: complete (commit 9b53eb0, review clean — spec ✅, quality approved, no findings)

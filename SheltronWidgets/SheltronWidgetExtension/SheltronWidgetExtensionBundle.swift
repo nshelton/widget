@@ -11,7 +11,6 @@ import SwiftUI
 @main
 struct SheltronWidgetExtensionBundle: WidgetBundle {
     var body: some Widget {
-        SheltronWidgetExtension()
-        SheltronWidgetExtensionControl()
+        DaytimeWidget()
     }
 }
