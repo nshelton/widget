@@ -21,3 +21,5 @@ Task 3: complete (commits afca042..c466678, review clean — spec ✅; fixture-t
 Task 4: complete-pending-visual (commit 8f5185f, code review clean — spec ✅, quality approved)
   Minor (defer to final review): DateFormatter locale not pinned (en_US_POSIX); DateFormatter allocated per redraw; arc closeSubpath strokes baseline edge
   NEEDS user visual confirm of Xcode preview vs reference image
+Task 5: complete (commit 8ff7837, review clean — spec ✅, quality approved)
+  Minor (defer): CLGeocoder deprecated on iOS 26 (still functional)
