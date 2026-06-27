@@ -1,0 +1,774 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2CB9ED522FEF5E9B00B00F1B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9ED512FEF5E9B00B00F1B /* WidgetKit.framework */; };
+		2CB9ED542FEF5E9B00B00F1B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CB9ED532FEF5E9B00B00F1B /* SwiftUI.framework */; };
+		2CB9ED612FEF5E9D00B00F1B /* SheltronWidgetExtensionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2CB9ED4F2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2CB9ED2F2FEF5E5200B00F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CB9ED192FEF5E5000B00F1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CB9ED202FEF5E5000B00F1B;
+			remoteInfo = SheltronWidgets;
+		};
+		2CB9ED392FEF5E5200B00F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CB9ED192FEF5E5000B00F1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CB9ED202FEF5E5000B00F1B;
+			remoteInfo = SheltronWidgets;
+		};
+		2CB9ED5F2FEF5E9D00B00F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2CB9ED192FEF5E5000B00F1B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2CB9ED4E2FEF5E9A00B00F1B;
+			remoteInfo = SheltronWidgetExtensionExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2CB9ED662FEF5E9D00B00F1B /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				2CB9ED612FEF5E9D00B00F1B /* SheltronWidgetExtensionExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2CB9ED212FEF5E5000B00F1B /* SheltronWidgets.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SheltronWidgets.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB9ED2E2FEF5E5200B00F1B /* SheltronWidgetsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SheltronWidgetsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB9ED382FEF5E5200B00F1B /* SheltronWidgetsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SheltronWidgetsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB9ED4F2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SheltronWidgetExtensionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CB9ED512FEF5E9B00B00F1B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		2CB9ED532FEF5E9B00B00F1B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		2CB9ED682FEF5EF300B00F1B /* SheltronWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SheltronWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2CB9ED622FEF5E9D00B00F1B /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgetExtensionExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2CB9ED4E2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2CB9ED232FEF5E5000B00F1B /* SheltronWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SheltronWidgets;
+			sourceTree = "<group>";
+		};
+		2CB9ED312FEF5E5200B00F1B /* SheltronWidgetsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SheltronWidgetsTests;
+			sourceTree = "<group>";
+		};
+		2CB9ED3B2FEF5E5200B00F1B /* SheltronWidgetsUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SheltronWidgetsUITests;
+			sourceTree = "<group>";
+		};
+		2CB9ED552FEF5E9B00B00F1B /* SheltronWidgetExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2CB9ED622FEF5E9D00B00F1B /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgetExtensionExtension" target */,
+			);
+			path = SheltronWidgetExtension;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2CB9ED1E2FEF5E5000B00F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED2B2FEF5E5200B00F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED352FEF5E5200B00F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED4C2FEF5E9A00B00F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2CB9ED542FEF5E9B00B00F1B /* SwiftUI.framework in Frameworks */,
+				2CB9ED522FEF5E9B00B00F1B /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2CB9ED182FEF5E5000B00F1B = {
+			isa = PBXGroup;
+			children = (
+				2CB9ED682FEF5EF300B00F1B /* SheltronWidgetExtensionExtension.entitlements */,
+				2CB9ED232FEF5E5000B00F1B /* SheltronWidgets */,
+				2CB9ED312FEF5E5200B00F1B /* SheltronWidgetsTests */,
+				2CB9ED3B2FEF5E5200B00F1B /* SheltronWidgetsUITests */,
+				2CB9ED552FEF5E9B00B00F1B /* SheltronWidgetExtension */,
+				2CB9ED502FEF5E9A00B00F1B /* Frameworks */,
+				2CB9ED222FEF5E5000B00F1B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2CB9ED222FEF5E5000B00F1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2CB9ED212FEF5E5000B00F1B /* SheltronWidgets.app */,
+				2CB9ED2E2FEF5E5200B00F1B /* SheltronWidgetsTests.xctest */,
+				2CB9ED382FEF5E5200B00F1B /* SheltronWidgetsUITests.xctest */,
+				2CB9ED4F2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2CB9ED502FEF5E9A00B00F1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2CB9ED512FEF5E9B00B00F1B /* WidgetKit.framework */,
+				2CB9ED532FEF5E9B00B00F1B /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CB9ED422FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgets" */;
+			buildPhases = (
+				2CB9ED1D2FEF5E5000B00F1B /* Sources */,
+				2CB9ED1E2FEF5E5000B00F1B /* Frameworks */,
+				2CB9ED1F2FEF5E5000B00F1B /* Resources */,
+				2CB9ED662FEF5E9D00B00F1B /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CB9ED602FEF5E9D00B00F1B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2CB9ED232FEF5E5000B00F1B /* SheltronWidgets */,
+			);
+			name = SheltronWidgets;
+			packageProductDependencies = (
+			);
+			productName = SheltronWidgets;
+			productReference = 2CB9ED212FEF5E5000B00F1B /* SheltronWidgets.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2CB9ED2D2FEF5E5200B00F1B /* SheltronWidgetsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CB9ED452FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetsTests" */;
+			buildPhases = (
+				2CB9ED2A2FEF5E5200B00F1B /* Sources */,
+				2CB9ED2B2FEF5E5200B00F1B /* Frameworks */,
+				2CB9ED2C2FEF5E5200B00F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CB9ED302FEF5E5200B00F1B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2CB9ED312FEF5E5200B00F1B /* SheltronWidgetsTests */,
+			);
+			name = SheltronWidgetsTests;
+			packageProductDependencies = (
+			);
+			productName = SheltronWidgetsTests;
+			productReference = 2CB9ED2E2FEF5E5200B00F1B /* SheltronWidgetsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2CB9ED372FEF5E5200B00F1B /* SheltronWidgetsUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CB9ED482FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetsUITests" */;
+			buildPhases = (
+				2CB9ED342FEF5E5200B00F1B /* Sources */,
+				2CB9ED352FEF5E5200B00F1B /* Frameworks */,
+				2CB9ED362FEF5E5200B00F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2CB9ED3A2FEF5E5200B00F1B /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2CB9ED3B2FEF5E5200B00F1B /* SheltronWidgetsUITests */,
+			);
+			name = SheltronWidgetsUITests;
+			packageProductDependencies = (
+			);
+			productName = SheltronWidgetsUITests;
+			productReference = 2CB9ED382FEF5E5200B00F1B /* SheltronWidgetsUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		2CB9ED4E2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2CB9ED632FEF5E9D00B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetExtensionExtension" */;
+			buildPhases = (
+				2CB9ED4B2FEF5E9A00B00F1B /* Sources */,
+				2CB9ED4C2FEF5E9A00B00F1B /* Frameworks */,
+				2CB9ED4D2FEF5E9A00B00F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2CB9ED552FEF5E9B00B00F1B /* SheltronWidgetExtension */,
+			);
+			name = SheltronWidgetExtensionExtension;
+			packageProductDependencies = (
+			);
+			productName = SheltronWidgetExtensionExtension;
+			productReference = 2CB9ED4F2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2CB9ED192FEF5E5000B00F1B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2660;
+				LastUpgradeCheck = 2660;
+				TargetAttributes = {
+					2CB9ED202FEF5E5000B00F1B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					2CB9ED2D2FEF5E5200B00F1B = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 2CB9ED202FEF5E5000B00F1B;
+					};
+					2CB9ED372FEF5E5200B00F1B = {
+						CreatedOnToolsVersion = 26.6;
+						TestTargetID = 2CB9ED202FEF5E5000B00F1B;
+					};
+					2CB9ED4E2FEF5E9A00B00F1B = {
+						CreatedOnToolsVersion = 26.6;
+					};
+				};
+			};
+			buildConfigurationList = 2CB9ED1C2FEF5E5000B00F1B /* Build configuration list for PBXProject "SheltronWidgets" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2CB9ED182FEF5E5000B00F1B;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2CB9ED222FEF5E5000B00F1B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */,
+				2CB9ED2D2FEF5E5200B00F1B /* SheltronWidgetsTests */,
+				2CB9ED372FEF5E5200B00F1B /* SheltronWidgetsUITests */,
+				2CB9ED4E2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2CB9ED1F2FEF5E5000B00F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED2C2FEF5E5200B00F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED362FEF5E5200B00F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED4D2FEF5E9A00B00F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2CB9ED1D2FEF5E5000B00F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED2A2FEF5E5200B00F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED342FEF5E5200B00F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2CB9ED4B2FEF5E9A00B00F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2CB9ED302FEF5E5200B00F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */;
+			targetProxy = 2CB9ED2F2FEF5E5200B00F1B /* PBXContainerItemProxy */;
+		};
+		2CB9ED3A2FEF5E5200B00F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */;
+			targetProxy = 2CB9ED392FEF5E5200B00F1B /* PBXContainerItemProxy */;
+		};
+		2CB9ED602FEF5E9D00B00F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2CB9ED4E2FEF5E9A00B00F1B /* SheltronWidgetExtensionExtension */;
+			targetProxy = 2CB9ED5F2FEF5E9D00B00F1B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2CB9ED402FEF5E5200B00F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2CB9ED412FEF5E5200B00F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2CB9ED432FEF5E5200B00F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SheltronWidgets/SheltronWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2CB9ED442FEF5E5200B00F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SheltronWidgets/SheltronWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2CB9ED462FEF5E5200B00F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgetsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SheltronWidgets.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SheltronWidgets";
+			};
+			name = Debug;
+		};
+		2CB9ED472FEF5E5200B00F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgetsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SheltronWidgets.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SheltronWidgets";
+			};
+			name = Release;
+		};
+		2CB9ED492FEF5E5200B00F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgetsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SheltronWidgets;
+			};
+			name = Debug;
+		};
+		2CB9ED4A2FEF5E5200B00F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgetsUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SheltronWidgets;
+			};
+			name = Release;
+		};
+		2CB9ED642FEF5E9D00B00F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SheltronWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SheltronWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SheltronWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgets.SheltronWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2CB9ED652FEF5E9D00B00F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SheltronWidgetExtensionExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2TSY42VQ29;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SheltronWidgetExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SheltronWidgetExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sheltron.SheltronWidgets.SheltronWidgetExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2CB9ED1C2FEF5E5000B00F1B /* Build configuration list for PBXProject "SheltronWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB9ED402FEF5E5200B00F1B /* Debug */,
+				2CB9ED412FEF5E5200B00F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CB9ED422FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgets" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB9ED432FEF5E5200B00F1B /* Debug */,
+				2CB9ED442FEF5E5200B00F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CB9ED452FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB9ED462FEF5E5200B00F1B /* Debug */,
+				2CB9ED472FEF5E5200B00F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CB9ED482FEF5E5200B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetsUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB9ED492FEF5E5200B00F1B /* Debug */,
+				2CB9ED4A2FEF5E5200B00F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2CB9ED632FEF5E9D00B00F1B /* Build configuration list for PBXNativeTarget "SheltronWidgetExtensionExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2CB9ED642FEF5E9D00B00F1B /* Debug */,
+				2CB9ED652FEF5E9D00B00F1B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2CB9ED192FEF5E5000B00F1B /* Project object */;
+}
