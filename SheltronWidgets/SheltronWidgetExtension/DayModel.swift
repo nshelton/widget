@@ -21,10 +21,11 @@ extension DayModel {
     /// Deterministic fixture: LA-ish, sinusoidal temps, real solar curve.
     static var sample: DayModel {
         let lat = 34.0522, lon = -118.2437
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "America/Los_Angeles")!
         var comps = DateComponents()
         comps.year = 2026; comps.month = 6; comps.day = 26
-        comps.timeZone = TimeZone(identifier: "America/Los_Angeles")
-        let dayStart = Calendar.current.startOfDay(for: Calendar(identifier: .gregorian).date(from: comps)!)
+        let dayStart = calendar.startOfDay(for: calendar.date(from: comps)!) // safe: hardcoded valid components, fixed LA tz
         let elev = SolarMath.elevationSamples(date: dayStart, latitude: lat, longitude: lon, interval: 600)
         let events = SolarMath.sunEvents(date: dayStart, latitude: lat, longitude: lon)
         let temps: [(date: Date, temp: Double)] = (0...24).map { h in
