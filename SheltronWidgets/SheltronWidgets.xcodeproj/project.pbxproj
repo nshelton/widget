@@ -76,6 +76,18 @@
 			);
 			target = 2CB9ED2D2FEF5E5200B00F1B /* SheltronWidgetsTests */;
 		};
+		2CB9ED9020260627AA001111 /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgets" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				SolarMath.swift,
+				DayModel.swift,
+				DayChartView.swift,
+				LocationProvider.swift,
+				ForecastService.swift,
+				DayModelBuilder.swift,
+			);
+			target = 2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -98,6 +110,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				2CB9ED702FEF708A00B00F1B /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgetsTests" target */,
+				2CB9ED9020260627AA001111 /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgets" target */,
 				2CB9ED622FEF5E9D00B00F1B /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgetExtensionExtension" target */,
 			);
 			path = SheltronWidgetExtension;

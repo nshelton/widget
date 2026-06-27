@@ -25,7 +25,7 @@ final class LocationAuth: NSObject, ObservableObject, CLLocationManagerDelegate 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         status = manager.authorizationStatus
         if status == .authorizedWhenInUse || status == .authorizedAlways {
-            manager.requestLocation() // prime a fix so the widget has a location to read
+            manager.requestLocation()
             WidgetCenter.shared.reloadAllTimelines()
         }
     }
@@ -38,46 +38,88 @@ final class LocationAuth: NSObject, ObservableObject, CLLocationManagerDelegate 
 
 struct ContentView: View {
     @StateObject private var auth = LocationAuth()
+    @State private var model: DayModel?
+    @State private var lastUpdate: Date?
+    @State private var loading = false
 
     private var granted: Bool {
         auth.status == .authorizedWhenInUse || auth.status == .authorizedAlways
     }
 
-    var body: some View {
-        VStack(spacing: 18) {
-            Image(systemName: "sun.max.fill")
-                .font(.system(size: 44))
-                .foregroundStyle(.orange)
-            Text("Daytime Widget")
-                .font(.headline)
-            Text(statusText)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .multilineTextAlignment(.center)
+    // Medium-widget aspect ratio so this matches what's on the home screen.
+    private let widgetAspect: CGFloat = 360.0 / 170.0
 
-            if granted {
-                Button("Refresh Widget") { WidgetCenter.shared.reloadAllTimelines() }
-                    .buttonStyle(.bordered)
-            } else {
-                Button(auth.status == .notDetermined ? "Allow Location" : "Open Settings") {
+    var body: some View {
+        VStack(spacing: 20) {
+            HStack(spacing: 8) {
+                Image(systemName: "sun.max.fill").foregroundStyle(.orange)
+                Text("Daytime").font(.headline)
+            }
+
+            // Identical render of the widget canvas
+            ZStack {
+                RoundedRectangle(cornerRadius: 22).fill(.black)
+                if let model {
+                    if model.locationDenied {
+                        Text("Enable location")
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundColor(.white.opacity(0.6))
+                    } else {
+                        DayChartView(model: model, now: Date())
+                    }
+                } else {
+                    ProgressView().tint(.white)
+                }
+            }
+            .aspectRatio(widgetAspect, contentMode: .fit)
+            .clipShape(RoundedRectangle(cornerRadius: 22))
+            .overlay(RoundedRectangle(cornerRadius: 22).strokeBorder(.white.opacity(0.08)))
+
+            Button {
+                refresh()
+            } label: {
+                Label(loading ? "Updating…" : "Update", systemImage: "arrow.clockwise")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .disabled(loading)
+
+            if !granted {
+                Button(auth.status == .notDetermined ? "Allow Location" : "Open Settings in iOS") {
                     auth.request()
                 }
-                .buttonStyle(.borderedProminent)
+                .buttonStyle(.bordered)
             }
+
+            VStack(spacing: 2) {
+                Text(model?.city ?? "—")
+                if let lastUpdate {
+                    Text("updated \(lastUpdate.formatted(date: .omitted, time: .standard))")
+                }
+            }
+            .font(.system(size: 11, design: .monospaced))
+            .foregroundStyle(.secondary)
+
+            Spacer()
         }
-        .padding(28)
+        .padding(24)
+        .onAppear {
+            if auth.status == .notDetermined { auth.request() }
+            refresh()
+        }
+        .onChange(of: auth.status) { _, _ in refresh() }
     }
 
-    private var statusText: String {
-        switch auth.status {
-        case .notDetermined:
-            return "Allow location so the widget can show the sun arc and weather for where you are."
-        case .denied, .restricted:
-            return "Location is off. Turn it on in Settings → SheltronWidgets → Location → While Using the App."
-        case .authorizedWhenInUse, .authorizedAlways:
-            return "Location granted. Your home-screen widget will update shortly."
-        @unknown default:
-            return ""
+    private func refresh() {
+        loading = true
+        Task {
+            let m = await DayModelBuilder.build(now: Date())
+            await MainActor.run {
+                self.model = m
+                self.lastUpdate = Date()
+                self.loading = false
+            }
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
 }

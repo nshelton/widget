@@ -3,20 +3,21 @@ import SwiftUI
 import CoreLocation
 
 struct DaytimeProvider: TimelineProvider {
-    private let fallback = CLLocation(latitude: 34.0522, longitude: -118.2437)
-
     func placeholder(in context: Context) -> DayEntry {
         DayEntry(date: DayModel.sample.dayStart.addingTimeInterval(18 * 3600), model: .sample)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (DayEntry) -> Void) {
-        Task { completion(await buildEntry(now: Date())) }
+        Task {
+            let now = Date()
+            completion(DayEntry(date: now, model: await DayModelBuilder.build(now: now)))
+        }
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<DayEntry>) -> Void) {
         Task {
             let now = Date()
-            let model = await buildModel(now: now)
+            let model = await DayModelBuilder.build(now: now)
             let dayEnd = model.dayStart.addingTimeInterval(86400)
             var entries: [DayEntry] = []
             var t = now
@@ -30,43 +31,6 @@ struct DaytimeProvider: TimelineProvider {
             let next = now < midday ? midday : dayEnd
             completion(Timeline(entries: entries, policy: .after(next)))
         }
-    }
-
-    private func buildEntry(now: Date) async -> DayEntry {
-        DayEntry(date: now, model: await buildModel(now: now))
-    }
-
-    private func buildModel(now: Date) async -> DayModel {
-        let dayStart = Calendar.current.startOfDay(for: now)
-        var place: LocatedPlace?
-        var denied = false
-        do { place = try await LocationProvider().current() }
-        catch LocationError.denied { denied = true; place = nil }
-        catch { place = nil }
-        let location = place?.location ?? fallback
-
-        let elevation = SolarMath.elevationSamples(date: dayStart, latitude: location.coordinate.latitude,
-                                                   longitude: location.coordinate.longitude, interval: 600)
-        let events = SolarMath.sunEvents(date: dayStart, latitude: location.coordinate.latitude,
-                                         longitude: location.coordinate.longitude)
-
-        var temps: [(date: Date, temp: Double)] = []
-        if place != nil {
-            temps = (try? await ForecastService().hourlyTemps(for: location, on: dayStart)) ?? []
-        }
-        let values = temps.map { $0.temp }
-
-        return DayModel(
-            city: place?.city,
-            hourlyTemps: temps,
-            elevationSamples: elevation,
-            sunrise: events.sunrise,
-            sunset: events.sunset,
-            tempMin: values.min(),
-            tempMax: values.max(),
-            dayStart: dayStart,
-            locationDenied: denied
-        )
     }
 }
 
