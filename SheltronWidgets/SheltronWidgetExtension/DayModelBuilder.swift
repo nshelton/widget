@@ -35,7 +35,8 @@ enum DayModelBuilder {
             tempMin: values.min(),
             tempMax: values.max(),
             dayStart: dayStart,
-            locationDenied: denied
+            locationDenied: denied,
+            generatedAt: now
         )
     }
 }

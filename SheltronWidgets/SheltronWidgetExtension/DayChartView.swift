@@ -17,8 +17,13 @@ struct DayChartView: View {
         let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "h:mma"; return f
     }()
 
+    private static let stampFormatter: DateFormatter = {
+        let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "h:mma"; return f
+    }()
+
     private func clockLabel(_ date: Date) -> String { Self.hourFormatter.string(from: date).lowercased() }
     private func eventLabel(_ date: Date) -> String { Self.eventFormatter.string(from: date).lowercased().replacingOccurrences(of: ":00", with: "") }
+    private func stamp(_ date: Date) -> String { Self.stampFormatter.string(from: date).lowercased() }
 
     var body: some View {
         Canvas { ctx, size in
@@ -139,6 +144,12 @@ struct DayChartView: View {
                 .font(.system(size: 9, design: .monospaced))
                 .foregroundColor(.white.opacity(0.4))
                 .padding(.leading, 4).padding(.bottom, 2)
+        }
+        .overlay(alignment: .topTrailing) {
+            Text(stamp(model.generatedAt))
+                .font(.system(size: 9, design: .monospaced))
+                .foregroundColor(.white.opacity(0.35))
+                .padding(.trailing, 4).padding(.top, 2)
         }
         .padding(8)
         .background(Color.black)
