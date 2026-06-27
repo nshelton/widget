@@ -5,10 +5,10 @@ struct DayChartView: View {
     let model: DayModel
     let now: Date
 
-    private let amber = Color(red: 1.0, green: 0.62, blue: 0.16)
-    private let pink = Color(red: 1.0, green: 0.30, blue: 0.42)
-    private let nightBlue = Color(red: 0.34, green: 0.48, blue: 0.82)
-    private let faint = Color.white.opacity(0.28)
+    private let amber = Color(red: 1.0, green: 0.76, blue: 0.32)
+    private let pink = Color(red: 1.0, green: 0.36, blue: 0.54)
+    private let nightBlue = Color(red: 0.48, green: 0.66, blue: 1.0)
+    private let faint = Color.white.opacity(0.45)
 
     private static let hourFormatter: DateFormatter = {
         let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "ha"; return f
@@ -27,17 +27,19 @@ struct DayChartView: View {
 
     var body: some View {
         Canvas { ctx, size in
-            let plot = CGRect(x: 34, y: 14, width: size.width - 44, height: size.height - 34)
+            let plot = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             let dayEnd = model.dayStart.addingTimeInterval(86400)
 
             func x(_ d: Date) -> CGFloat {
                 let f = d.timeIntervalSince(model.dayStart) / 86400
                 return plot.minX + CGFloat(max(0, min(1, f))) * plot.width
             }
+            // Small vertical inset so peaks/troughs don't clip at the very edge.
             func yTemp(_ t: Double) -> CGFloat {
                 guard let lo = model.tempMin, let hi = model.tempMax, hi > lo else { return plot.midY }
                 let f = (t - lo) / (hi - lo)
-                return plot.maxY - CGFloat(max(0, min(1, f))) * plot.height
+                let top = plot.minY + 4, bottom = plot.maxY - 4
+                return bottom - CGFloat(max(0, min(1, f))) * (bottom - top)
             }
             // Full-range elevation mapping: whole day's [minElev, maxElev] across the plot, so
             // the curve rises above and dips below the horizon (0°) at true proportions.
@@ -45,7 +47,7 @@ struct DayChartView: View {
             let maxElev = max(1, elevs.max() ?? 1)
             let minElev = min(-1, elevs.min() ?? -1)
             let elevRange = maxElev - minElev
-            let elevPad: CGFloat = 6
+            let elevPad: CGFloat = 4
             let elevTop = plot.minY + elevPad
             let elevBottom = plot.maxY - elevPad
             func yElev(_ e: Double) -> CGFloat {
@@ -64,22 +66,22 @@ struct DayChartView: View {
 
             var dayLayer = ctx
             dayLayer.clip(to: Path(CGRect(x: plot.minX, y: plot.minY, width: plot.width, height: yHorizon - plot.minY)))
-            dayLayer.fill(poly, with: .color(amber.opacity(0.20)))
+            dayLayer.fill(poly, with: .color(amber.opacity(0.32)))
 
             var nightLayer = ctx
             nightLayer.clip(to: Path(CGRect(x: plot.minX, y: yHorizon, width: plot.width, height: plot.maxY - yHorizon)))
-            nightLayer.fill(poly, with: .color(nightBlue.opacity(0.18)))
+            nightLayer.fill(poly, with: .color(nightBlue.opacity(0.30)))
 
             // Horizon line (0° elevation)
             var horizon = Path()
             horizon.move(to: CGPoint(x: plot.minX, y: yHorizon))
             horizon.addLine(to: CGPoint(x: plot.maxX, y: yHorizon))
-            ctx.stroke(horizon, with: .color(.white.opacity(0.18)), lineWidth: 1)
+            ctx.stroke(horizon, with: .color(.white.opacity(0.28)), lineWidth: 1)
 
             // Full elevation curve stroke
             var arc = Path()
             for (i, p) in elevPts.enumerated() { i == 0 ? arc.move(to: p) : arc.addLine(to: p) }
-            ctx.stroke(arc, with: .color(amber.opacity(0.55)), lineWidth: 1.5)
+            ctx.stroke(arc, with: .color(amber.opacity(0.9)), lineWidth: 1.8)
 
             // Hourly temperature line
             if model.hourlyTemps.count > 1 {
@@ -88,7 +90,7 @@ struct DayChartView: View {
                     let p = CGPoint(x: x(h.date), y: yTemp(h.temp))
                     i == 0 ? line.move(to: p) : line.addLine(to: p)
                 }
-                ctx.stroke(line, with: .color(amber), lineWidth: 2)
+                ctx.stroke(line, with: .color(amber), lineWidth: 2.4)
             }
 
             // Dashed reference line at current temp
@@ -117,33 +119,27 @@ struct DayChartView: View {
                 var nl = Path()
                 nl.move(to: CGPoint(x: x(now), y: plot.minY - 4))
                 nl.addLine(to: CGPoint(x: x(now), y: plot.maxY))
-                ctx.stroke(nl, with: .color(pink), lineWidth: 1.5)
+                ctx.stroke(nl, with: .color(pink), lineWidth: 1.8)
                 if let curTemp = interpolatedTemp(at: now) {
                     let dot = CGRect(x: x(now) - 3.5, y: yTemp(curTemp) - 3.5, width: 7, height: 7)
                     ctx.fill(Path(ellipseIn: dot), with: .color(pink))
                 }
             }
 
-            // Axis labels: temps (left) and hours (bottom)
+            // Axis labels: temps (left corners) and interior hour ticks (bottom)
             if let hi = model.tempMax {
-                ctx.draw(Text("\(Int(hi.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.5)),
-                         at: CGPoint(x: 4, y: plot.minY), anchor: .topLeading)
+                ctx.draw(Text("\(Int(hi.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.7)),
+                         at: CGPoint(x: 3, y: plot.minY + 1), anchor: .topLeading)
             }
             if let lo = model.tempMin {
-                ctx.draw(Text("\(Int(lo.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.5)),
-                         at: CGPoint(x: 4, y: plot.maxY), anchor: .bottomLeading)
+                ctx.draw(Text("\(Int(lo.rounded()))°").font(.system(size: 13, design: .monospaced)).foregroundColor(.white.opacity(0.7)),
+                         at: CGPoint(x: 3, y: plot.maxY - 1), anchor: .bottomLeading)
             }
-            for hour in [0, 6, 12, 18] {
+            for hour in [6, 12, 18] {
                 let d = model.dayStart.addingTimeInterval(Double(hour) * 3600)
                 ctx.draw(Text(clockLabel(d)).font(.system(size: 9, design: .monospaced)).foregroundColor(faint),
-                         at: CGPoint(x: x(d), y: plot.maxY + 4), anchor: .top)
+                         at: CGPoint(x: x(d), y: plot.maxY - 2), anchor: .bottom)
             }
-        }
-        .overlay(alignment: .bottomLeading) {
-            Text("Today · \(model.city ?? "—")")
-                .font(.system(size: 9, design: .monospaced))
-                .foregroundColor(.white.opacity(0.4))
-                .padding(.leading, 4).padding(.bottom, 2)
         }
         .overlay(alignment: .topTrailing) {
             Text(stamp(model.generatedAt))
