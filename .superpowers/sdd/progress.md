@@ -18,3 +18,6 @@ Task 1: complete (Xcode project scaffolded by user; baseline app scheme builds o
 Task 2: complete (commits 248982d..e7e9f79, review clean — spec ✅, quality approved)
   Minor (defer to final review): params() helper name vague; sunEvents noonJD comment misleading; elevationSamples `out` lacks tuple labels
 Task 3: complete (commits afca042..c466678, review clean — spec ✅; fixture-tz fix applied)
+Task 4: complete-pending-visual (commit 8f5185f, code review clean — spec ✅, quality approved)
+  Minor (defer to final review): DateFormatter locale not pinned (en_US_POSIX); DateFormatter allocated per redraw; arc closeSubpath strokes baseline edge
+  NEEDS user visual confirm of Xcode preview vs reference image
