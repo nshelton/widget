@@ -25,3 +25,9 @@ Task 5: complete (commit 8ff7837, review clean — spec ✅, quality approved)
   Minor (defer): CLGeocoder deprecated on iOS 26 (still functional)
 Task 6: complete (commit 9b53eb0, review clean — spec ✅, quality approved, no findings)
 Task 7: complete (commit c402d2a, build succeeded — wiring + template removal)
+
+## Final whole-branch review (opus)
+Found: denied-location placeholder broken (LA fallback masked it; sunrise==nil was polar-day cond), missing midday reload, DateFormatter locale not pinned.
+Fix commit b5033c1 — re-reviewed APPROVED, build green, SolarMath 2/2.
+Deferred Minors (acceptable): SolarMath params()/noonJD comment/out tuple labels; arc closeSubpath baseline stroke; CLGeocoder iOS26 deprecation; getSnapshot does network; continuation no timeout.
+STATUS: implementation complete. Pending user-side: visual preview check (Task 4) + on-device run (real WeatherKit/location).
