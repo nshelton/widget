@@ -10,6 +10,7 @@ struct DayModel {
     let tempMin: Double?
     let tempMax: Double?
     let dayStart: Date
+    let locationDenied: Bool
 }
 
 struct DayEntry: TimelineEntry {
@@ -42,7 +43,8 @@ extension DayModel {
             sunset: events.sunset,
             tempMin: values.min(),
             tempMax: values.max(),
-            dayStart: dayStart
+            dayStart: dayStart,
+            locationDenied: false
         )
     }
 }

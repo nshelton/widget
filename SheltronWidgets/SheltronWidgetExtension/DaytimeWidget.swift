@@ -25,8 +25,10 @@ struct DaytimeProvider: TimelineProvider {
                 t = t.addingTimeInterval(15 * 60)
             }
             if entries.isEmpty { entries = [DayEntry(date: now, model: model)] }
-            // Reload at next midnight (curves change) — also refreshes the forecast.
-            completion(Timeline(entries: entries, policy: .after(dayEnd)))
+            // Reload at midday to refresh the forecast, then again at the day boundary for new solar curves.
+            let midday = model.dayStart.addingTimeInterval(12 * 3600)
+            let next = now < midday ? midday : dayEnd
+            completion(Timeline(entries: entries, policy: .after(next)))
         }
     }
 
@@ -37,7 +39,10 @@ struct DaytimeProvider: TimelineProvider {
     private func buildModel(now: Date) async -> DayModel {
         let dayStart = Calendar.current.startOfDay(for: now)
         var place: LocatedPlace?
-        do { place = try await LocationProvider().current() } catch { place = nil }
+        var denied = false
+        do { place = try await LocationProvider().current() }
+        catch LocationError.denied { denied = true; place = nil }
+        catch { place = nil }
         let location = place?.location ?? fallback
 
         let elevation = SolarMath.elevationSamples(date: dayStart, latitude: location.coordinate.latitude,
@@ -59,7 +64,8 @@ struct DaytimeProvider: TimelineProvider {
             sunset: events.sunset,
             tempMin: values.min(),
             tempMax: values.max(),
-            dayStart: dayStart
+            dayStart: dayStart,
+            locationDenied: denied
         )
     }
 }
@@ -69,7 +75,7 @@ struct DaytimeWidget: Widget {
     var body: some WidgetConfiguration {
         StaticConfiguration(kind: kind, provider: DaytimeProvider()) { entry in
             Group {
-                if entry.model.city == nil && entry.model.hourlyTemps.isEmpty && entry.model.sunrise == nil {
+                if entry.model.locationDenied {
                     Text("Enable location")
                         .font(.system(.caption, design: .monospaced))
                         .foregroundColor(.white.opacity(0.6))

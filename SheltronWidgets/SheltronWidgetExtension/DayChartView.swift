@@ -9,14 +9,15 @@ struct DayChartView: View {
     private let pink = Color(red: 1.0, green: 0.30, blue: 0.42)
     private let faint = Color.white.opacity(0.28)
 
-    private func clockLabel(_ date: Date) -> String {
-        let f = DateFormatter(); f.dateFormat = "ha"
-        return f.string(from: date).lowercased()
-    }
-    private func eventLabel(_ date: Date) -> String {
-        let f = DateFormatter(); f.dateFormat = "h:mma"
-        return f.string(from: date).lowercased().replacingOccurrences(of: ":00", with: "")
-    }
+    private static let hourFormatter: DateFormatter = {
+        let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "ha"; return f
+    }()
+    private static let eventFormatter: DateFormatter = {
+        let f = DateFormatter(); f.locale = Locale(identifier: "en_US_POSIX"); f.dateFormat = "h:mma"; return f
+    }()
+
+    private func clockLabel(_ date: Date) -> String { Self.hourFormatter.string(from: date).lowercased() }
+    private func eventLabel(_ date: Date) -> String { Self.eventFormatter.string(from: date).lowercased().replacingOccurrences(of: ":00", with: "") }
 
     var body: some View {
         Canvas { ctx, size in
