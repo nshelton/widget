@@ -53,13 +53,13 @@ enum StarChartRenderer {
         // Altitude circles at 30° and 60°
         for alt in stride(from: 30.0, through: 60.0, by: 30.0) {
             let r = CGFloat(cos(alt * .pi / 180) / (1.0 + sin(alt * .pi / 180))) * radius
-            ctx.strokeEllipseIn(CGRect(x: cx - r, y: cy - r, width: r * 2, height: r * 2))
+            ctx.strokeEllipse(in: CGRect(x: cx - r, y: cy - r, width: r * 2, height: r * 2))
         }
 
         // Horizon circle
         ctx.setStrokeColor(UIColor.white.withAlphaComponent(0.12).cgColor)
         ctx.setLineWidth(1.0)
-        ctx.strokeEllipseIn(CGRect(x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2))
+        ctx.strokeEllipse(in: CGRect(x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2))
     }
 
     private static func projectStar(_ star: CatalogStar, cx: CGFloat, cy: CGFloat, radius: CGFloat,
@@ -130,7 +130,7 @@ enum StarChartRenderer {
                 color = UIColor.white.withAlphaComponent(alpha)
             }
             ctx.setFillColor(color.cgColor)
-            ctx.fillEllipseIn(CGRect(x: pt.x - dotRadius, y: pt.y - dotRadius,
+            ctx.fillEllipse(in: CGRect(x: pt.x - dotRadius, y: pt.y - dotRadius,
                                      width: dotRadius * 2, height: dotRadius * 2))
 
             // Name label for brightest named stars

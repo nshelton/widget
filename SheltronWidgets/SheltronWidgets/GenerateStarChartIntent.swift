@@ -1,6 +1,7 @@
 import AppIntents
 import UIKit
 import CoreLocation
+import UniformTypeIdentifiers
 
 struct GenerateStarChartIntent: AppIntent {
     static var title: LocalizedStringResource = "Generate Star Chart Wallpaper"
@@ -10,6 +11,7 @@ struct GenerateStarChartIntent: AppIntent {
     )
     static var openAppWhenRun: Bool = false
 
+    @MainActor
     func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> {
         let location: CLLocation
         do {
