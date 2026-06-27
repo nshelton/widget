@@ -13,6 +13,9 @@ struct StarChartSettingsView: View {
                     picker("Constellations", \.constellation)
                     picker("Grid & horizon", \.grid)
                     picker("Text", \.text)
+                    picker("Ecliptic", \.ecliptic)
+                    picker("Sun", \.sun)
+                    picker("Moon", \.moon)
                 }
             }
             .navigationTitle("Star Chart Colors")

@@ -22,8 +22,11 @@ enum StarChartRenderer {
 
             drawBackground(ctx: ctx, size: size, theme: theme)
             drawGridLines(ctx: ctx, cx: cx, cy: cy, radius: radius, theme: theme)
+            drawEcliptic(ctx: ctx, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date, theme: theme)
             drawConstellationLines(ctx: ctx, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date, theme: theme)
             drawStars(ctx: ctx, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date, theme: theme)
+            drawSun(ctx: ctx, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date, theme: theme)
+            drawMoon(ctx: ctx, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date, theme: theme)
             drawCardinalLabels(ctx: ctx, cx: cx, cy: cy, radius: radius, theme: theme)
             drawInfoText(ctx: ctx, size: size, lat: lat, lon: lon, date: date, theme: theme)
             if theme.showDebugTimestamp {
@@ -70,16 +73,107 @@ enum StarChartRenderer {
         ctx.strokeEllipse(in: CGRect(x: cx - radius, y: cy - radius, width: radius * 2, height: radius * 2))
     }
 
-    private static func projectStar(_ star: CatalogStar, cx: CGFloat, cy: CGFloat, radius: CGFloat,
-                                     lat: Double, lon: Double, date: Date) -> CGPoint? {
+    private static func projectEquatorial(ra: Double, dec: Double, cx: CGFloat, cy: CGFloat, radius: CGFloat,
+                                          lat: Double, lon: Double, date: Date) -> CGPoint? {
         let hor = CelestialMath.equatorialToHorizontal(
-            ra: star.ra, dec: star.dec,
-            latitude: lat, longitude: lon, date: date
+            ra: ra, dec: dec, latitude: lat, longitude: lon, date: date
         )
         guard let proj = CelestialMath.stereographicProject(altitude: hor.altitude, azimuth: hor.azimuth) else {
             return nil
         }
         return CGPoint(x: cx + CGFloat(proj.x) * radius, y: cy + CGFloat(proj.y) * radius)
+    }
+
+    private static func projectStar(_ star: CatalogStar, cx: CGFloat, cy: CGFloat, radius: CGFloat,
+                                     lat: Double, lon: Double, date: Date) -> CGPoint? {
+        projectEquatorial(ra: star.ra, dec: star.dec, cx: cx, cy: cy, radius: radius, lat: lat, lon: lon, date: date)
+    }
+
+    private static func drawEcliptic(ctx: CGContext, cx: CGFloat, cy: CGFloat, radius: CGFloat,
+                                     lat: Double, lon: Double, date: Date, theme: StarChartTheme) {
+        ctx.setStrokeColor(ui(theme.ecliptic).cgColor)
+        ctx.setLineWidth(1.5)
+
+        var started = false
+        var eclLon = 0.0
+        while eclLon <= 360.0 {
+            let eq = CelestialMath.eclipticToEquatorial(lon: eclLon, lat: 0, date: date)
+            if let pt = projectEquatorial(ra: eq.ra, dec: eq.dec, cx: cx, cy: cy, radius: radius,
+                                          lat: lat, lon: lon, date: date) {
+                if started { ctx.addLine(to: pt) } else { ctx.move(to: pt); started = true }
+            } else {
+                started = false  // below horizon: break the path
+            }
+            eclLon += 2
+        }
+        ctx.strokePath()
+    }
+
+    private static func drawSun(ctx: CGContext, cx: CGFloat, cy: CGFloat, radius: CGFloat,
+                                lat: Double, lon: Double, date: Date, theme: StarChartTheme) {
+        let eq = CelestialMath.sunEquatorial(date)
+        guard let pt = projectEquatorial(ra: eq.ra, dec: eq.dec, cx: cx, cy: cy, radius: radius,
+                                         lat: lat, lon: lon, date: date) else { return }
+        let r: CGFloat = 22
+
+        // glow
+        let gradient = CGGradient(
+            colorsSpace: CGColorSpaceCreateDeviceRGB(),
+            colors: [ui(theme.sun, alpha: 0.6).cgColor, UIColor.clear.cgColor] as CFArray,
+            locations: [0, 1]
+        )!
+        ctx.saveGState()
+        ctx.drawRadialGradient(gradient, startCenter: pt, startRadius: 0,
+                               endCenter: pt, endRadius: r * 3, options: [])
+        ctx.restoreGState()
+
+        ctx.setFillColor(ui(theme.sun).cgColor)
+        ctx.fillEllipse(in: CGRect(x: pt.x - r, y: pt.y - r, width: r * 2, height: r * 2))
+        drawLabel("Sun", at: pt, offset: r + 6, color: ui(theme.sun))
+    }
+
+    private static func drawMoon(ctx: CGContext, cx: CGFloat, cy: CGFloat, radius: CGFloat,
+                                 lat: Double, lon: Double, date: Date, theme: StarChartTheme) {
+        let eq = CelestialMath.moonEquatorial(date)
+        guard let pt = projectEquatorial(ra: eq.ra, dec: eq.dec, cx: cx, cy: cy, radius: radius,
+                                         lat: lat, lon: lon, date: date) else { return }
+        let r: CGFloat = 18
+        let illum = CelestialMath.moonIllumination(date)
+
+        // Dark disc base
+        ctx.setFillColor(ui(theme.moon, alpha: 0.18).cgColor)
+        ctx.fillEllipse(in: CGRect(x: pt.x - r, y: pt.y - r, width: r * 2, height: r * 2))
+
+        // Lit portion bounded by the terminator ellipse
+        let sign: CGFloat = illum.waxing ? 1 : -1
+        let tx = CGFloat(1 - 2 * illum.fraction) * r
+        var pts: [CGPoint] = []
+        let n = 40
+        for k in 0...n { // bright limb (semicircle on the lit side)
+            let a = -CGFloat.pi / 2 + CGFloat.pi * CGFloat(k) / CGFloat(n)
+            pts.append(CGPoint(x: pt.x + sign * r * cos(a), y: pt.y + r * sin(a)))
+        }
+        for k in 0...n { // terminator (half-ellipse) back to the top
+            let a = CGFloat.pi / 2 - CGFloat.pi * CGFloat(k) / CGFloat(n)
+            pts.append(CGPoint(x: pt.x + sign * tx * cos(a), y: pt.y + r * sin(a)))
+        }
+        ctx.beginPath()
+        ctx.addLines(between: pts)
+        ctx.closePath()
+        ctx.setFillColor(ui(theme.moon).cgColor)
+        ctx.fillPath()
+
+        drawLabel("Moon", at: pt, offset: r + 6, color: ui(theme.moon))
+    }
+
+    private static func drawLabel(_ text: String, at pt: CGPoint, offset: CGFloat, color: UIColor) {
+        let attrs: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 15, weight: .medium),
+            .foregroundColor: color,
+        ]
+        let s = NSString(string: text)
+        let sz = s.size(withAttributes: attrs)
+        s.draw(at: CGPoint(x: pt.x + offset, y: pt.y - sz.height / 2), withAttributes: attrs)
     }
 
     private static func drawConstellationLines(ctx: CGContext, cx: CGFloat, cy: CGFloat, radius: CGFloat,

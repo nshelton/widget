@@ -72,6 +72,7 @@
 		2CB9ED702FEF708A00B00F1B /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgetsTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CelestialMath.swift,
 				SolarMath.swift,
 				StarChartTheme.swift,
 				WidgetTheme.swift,
@@ -81,6 +82,7 @@
 		2CB9ED9020260627AA001111 /* Exceptions for "SheltronWidgetExtension" folder in "SheltronWidgets" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				CelestialMath.swift,
 				DayChartView.swift,
 				DayModel.swift,
 				DayModelBuilder.swift,
