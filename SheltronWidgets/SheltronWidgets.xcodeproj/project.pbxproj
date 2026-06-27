@@ -58,6 +58,7 @@
 		2CB9ED512FEF5E9B00B00F1B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2CB9ED532FEF5E9B00B00F1B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2CB9ED682FEF5EF300B00F1B /* SheltronWidgetExtensionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SheltronWidgetExtensionExtension.entitlements; sourceTree = "<group>"; };
+		2CB9ED9D2FF05BA900B00F1B /* WeatherKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WeatherKit.framework; path = System/Library/Frameworks/WeatherKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -165,6 +166,7 @@
 		2CB9ED502FEF5E9A00B00F1B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2CB9ED9D2FF05BA900B00F1B /* WeatherKit.framework */,
 				2CB9ED512FEF5E9B00B00F1B /* WidgetKit.framework */,
 				2CB9ED532FEF5E9B00B00F1B /* SwiftUI.framework */,
 			);
@@ -527,8 +529,8 @@
 				DEVELOPMENT_TEAM = 2TSY42VQ29;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows the sun position and local weather for your current location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -561,8 +563,8 @@
 				DEVELOPMENT_TEAM = 2TSY42VQ29;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Shows the sun position and local weather for your current location.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

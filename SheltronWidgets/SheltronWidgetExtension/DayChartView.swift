@@ -7,6 +7,7 @@ struct DayChartView: View {
 
     private let amber = Color(red: 1.0, green: 0.62, blue: 0.16)
     private let pink = Color(red: 1.0, green: 0.30, blue: 0.42)
+    private let nightBlue = Color(red: 0.34, green: 0.48, blue: 0.82)
     private let faint = Color.white.opacity(0.28)
 
     private static let hourFormatter: DateFormatter = {
@@ -33,18 +34,46 @@ struct DayChartView: View {
                 let f = (t - lo) / (hi - lo)
                 return plot.maxY - CGFloat(max(0, min(1, f))) * plot.height
             }
-            let maxElev = max(1, model.elevationSamples.map { $0.elevation }.max() ?? 1)
+            // Full-range elevation mapping: whole day's [minElev, maxElev] across the plot, so
+            // the curve rises above and dips below the horizon (0°) at true proportions.
+            let elevs = model.elevationSamples.map { $0.elevation }
+            let maxElev = max(1, elevs.max() ?? 1)
+            let minElev = min(-1, elevs.min() ?? -1)
+            let elevRange = maxElev - minElev
+            let elevPad: CGFloat = 6
+            let elevTop = plot.minY + elevPad
+            let elevBottom = plot.maxY - elevPad
             func yElev(_ e: Double) -> CGFloat {
-                plot.maxY - CGFloat(max(0, e) / maxElev) * plot.height
+                elevBottom - CGFloat((e - minElev) / elevRange) * (elevBottom - elevTop)
             }
+            let yHorizon = yElev(0)
 
-            // Sun-elevation filled arc
+            // Sun-elevation curve: filled day above horizon (amber), filled night below (cool),
+            // split by clipping the curve↔horizon polygon at the horizon line.
+            let elevPts = model.elevationSamples.map { CGPoint(x: x($0.date), y: yElev($0.elevation)) }
+            var poly = Path()
+            poly.move(to: CGPoint(x: plot.minX, y: yHorizon))
+            for p in elevPts { poly.addLine(to: p) }
+            poly.addLine(to: CGPoint(x: plot.maxX, y: yHorizon))
+            poly.closeSubpath()
+
+            var dayLayer = ctx
+            dayLayer.clip(to: Path(CGRect(x: plot.minX, y: plot.minY, width: plot.width, height: yHorizon - plot.minY)))
+            dayLayer.fill(poly, with: .color(amber.opacity(0.20)))
+
+            var nightLayer = ctx
+            nightLayer.clip(to: Path(CGRect(x: plot.minX, y: yHorizon, width: plot.width, height: plot.maxY - yHorizon)))
+            nightLayer.fill(poly, with: .color(nightBlue.opacity(0.18)))
+
+            // Horizon line (0° elevation)
+            var horizon = Path()
+            horizon.move(to: CGPoint(x: plot.minX, y: yHorizon))
+            horizon.addLine(to: CGPoint(x: plot.maxX, y: yHorizon))
+            ctx.stroke(horizon, with: .color(.white.opacity(0.18)), lineWidth: 1)
+
+            // Full elevation curve stroke
             var arc = Path()
-            arc.move(to: CGPoint(x: plot.minX, y: plot.maxY))
-            for s in model.elevationSamples { arc.addLine(to: CGPoint(x: x(s.date), y: yElev(s.elevation))) }
-            arc.addLine(to: CGPoint(x: plot.maxX, y: plot.maxY))
-            arc.closeSubpath()
-            ctx.fill(arc, with: .color(amber.opacity(0.18)))
+            for (i, p) in elevPts.enumerated() { i == 0 ? arc.move(to: p) : arc.addLine(to: p) }
             ctx.stroke(arc, with: .color(amber.opacity(0.55)), lineWidth: 1.5)
 
             // Hourly temperature line
