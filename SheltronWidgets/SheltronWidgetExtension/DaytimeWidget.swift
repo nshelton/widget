@@ -52,5 +52,6 @@ struct DaytimeWidget: Widget {
         .configurationDisplayName("Daytime")
         .description("Sun arc and temperature across the day.")
         .supportedFamilies([.systemMedium])
+        .contentMarginsDisabled()
     }
 }
