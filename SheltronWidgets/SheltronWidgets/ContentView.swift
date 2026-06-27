@@ -3,6 +3,7 @@ import CoreLocation
 import WidgetKit
 import UIKit
 import Combine
+import AppIntents
 
 final class LocationAuth: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
@@ -105,6 +106,10 @@ struct ContentView: View {
             }
             .font(.system(size: 11, design: .monospaced))
             .foregroundStyle(.secondary)
+
+            Divider().padding(.vertical, 8)
+
+            StarChartSection()
 
             Spacer()
         }
