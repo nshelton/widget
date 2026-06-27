@@ -6,6 +6,9 @@ struct StarChartSection: View {
     @State private var previewImage: UIImage?
     @State private var generating = false
     @State private var showSetupSheet = false
+    @State private var showColorEditor = false
+    @State private var theme = StarChartTheme.load()
+    @AppStorage("wallpaperShortcutName") private var shortcutName = "Star Chart Wallpaper"
 
     var body: some View {
         VStack(spacing: 12) {
@@ -33,6 +36,22 @@ struct StarChartSection: View {
             .buttonStyle(.bordered)
             .disabled(generating)
 
+            Button {
+                showColorEditor = true
+            } label: {
+                Label("Edit Colors", systemImage: "paintpalette")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.bordered)
+
+            Toggle(isOn: $theme.showDebugTimestamp) {
+                Label("Debug timestamp", systemImage: "clock.badge.checkmark")
+            }
+            .onChange(of: theme.showDebugTimestamp) { _, _ in
+                theme.save()
+                generatePreview()
+            }
+
             if previewImage != nil {
                 Button {
                     saveToPhotos()
@@ -44,13 +63,28 @@ struct StarChartSection: View {
             }
 
             Button {
+                runWallpaperShortcut()
+            } label: {
+                Label("Set Wallpaper Now", systemImage: "photo.on.rectangle.angled")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(.indigo)
+
+            HStack {
+                Text("Shortcut").font(.caption).foregroundStyle(.secondary)
+                TextField("Shortcut name", text: $shortcutName)
+                    .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled()
+            }
+
+            Button {
                 showSetupSheet = true
             } label: {
                 Label("Auto-Update Setup", systemImage: "clock.arrow.2.circlepath")
                     .frame(maxWidth: .infinity)
             }
-            .buttonStyle(.borderedProminent)
-            .tint(.indigo)
+            .buttonStyle(.bordered)
 
             ShortcutsLink()
                 .shortcutsLinkStyle(.automaticOutline)
@@ -58,10 +92,14 @@ struct StarChartSection: View {
         .sheet(isPresented: $showSetupSheet) {
             AutoUpdateSetupView()
         }
+        .sheet(isPresented: $showColorEditor, onDismiss: { generatePreview() }) {
+            StarChartSettingsView(theme: $theme)
+        }
     }
 
     private func generatePreview() {
         generating = true
+        let theme = theme
         Task {
             let location: CLLocation
             do {
@@ -71,7 +109,8 @@ struct StarChartSection: View {
                 location = DayModelBuilder.fallback
             }
             let image = StarChartRenderer.render(location: location, date: Date(),
-                                                  size: CGSize(width: 1290, height: 2796))
+                                                  size: CGSize(width: 1290, height: 2796),
+                                                  theme: theme)
             await MainActor.run {
                 previewImage = image
                 generating = false
@@ -83,6 +122,12 @@ struct StarChartSection: View {
         guard let image = previewImage else { return }
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
     }
+
+    private func runWallpaperShortcut() {
+        let name = shortcutName.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let url = URL(string: "shortcuts://run-shortcut?name=\(name)") else { return }
+        UIApplication.shared.open(url)
+    }
 }
 
 struct AutoUpdateSetupView: View {
@@ -92,30 +137,26 @@ struct AutoUpdateSetupView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    Text("The app provides a Shortcut action that generates a fresh star chart. You can set up a Shortcuts automation to run it hourly and set your lock screen wallpaper automatically.")
+                    Text("iOS only lets the Shortcuts app set the wallpaper, so the app hands off to a Shortcut you create once. Build it below, then run it hourly via an automation, or tap \"Set Wallpaper Now\" in the app to run it on demand.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
 
                     VStack(alignment: .leading, spacing: 16) {
                         SetupStep(number: 1,
-                                  title: "Open Shortcuts",
-                                  detail: "Go to the Automation tab")
+                                  title: "New Shortcut",
+                                  detail: "In Shortcuts, tap + to create a shortcut. Name it exactly \"Star Chart Wallpaper\" (or match the name in the app's Shortcut field).")
 
                         SetupStep(number: 2,
-                                  title: "New Automation",
-                                  detail: "Tap + → Personal Automation → Time of Day")
+                                  title: "Add Actions",
+                                  detail: "Search for \"Generate Star Chart\" — the app's action. Then add \"Set Wallpaper\" and choose Lock Screen, using the generated image.")
 
                         SetupStep(number: 3,
-                                  title: "Set Schedule",
-                                  detail: "Choose \"Hourly\" or your preferred interval")
+                                  title: "Run It from the App",
+                                  detail: "Back in the app, tap \"Set Wallpaper Now\" to run this shortcut and update your lock screen.")
 
                         SetupStep(number: 4,
-                                  title: "Add Actions",
-                                  detail: "Search for \"Generate Star Chart\" — this is the app's action. Then add \"Set Wallpaper\" and choose Lock Screen.")
-
-                        SetupStep(number: 5,
-                                  title: "Disable Ask Before Running",
-                                  detail: "Toggle it off so it runs silently in the background")
+                                  title: "Automate (optional)",
+                                  detail: "In the Automation tab, add a Time of Day automation that runs the same shortcut hourly. Turn off \"Ask Before Running\" so it's silent.")
                     }
 
                     ShortcutsLink()

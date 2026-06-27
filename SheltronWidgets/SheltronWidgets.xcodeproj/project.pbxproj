@@ -73,6 +73,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				SolarMath.swift,
+				StarChartTheme.swift,
+				WidgetTheme.swift,
 			);
 			target = 2CB9ED2D2FEF5E5200B00F1B /* SheltronWidgetsTests */;
 		};
@@ -85,6 +87,7 @@
 				ForecastService.swift,
 				LocationProvider.swift,
 				SolarMath.swift,
+				StarChartTheme.swift,
 				WidgetTheme.swift,
 			);
 			target = 2CB9ED202FEF5E5000B00F1B /* SheltronWidgets */;
